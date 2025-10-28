@@ -14,7 +14,7 @@ export default function Home() {
         <Popular />
         <Featured />
 
-        <Venues />
+        {/* <Venues /> */}
         </div>
       </div>
     </>
