@@ -43,8 +43,6 @@ export default function Venues() {
                 });
                 const data = await res.json();
                 const venues = data.data;
-                console.log(venues[0]._count)
-                console.log(venues);
                 setVenues(venues);
             } catch(err) {
                 setErr(err);
