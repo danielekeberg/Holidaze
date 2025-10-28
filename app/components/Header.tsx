@@ -9,7 +9,7 @@ export default function Header() {
                 </Link>
                 <div className="flex gap-4 items-center font-bold text-sm">
                     <Link href="../" className="text-[#1E2A38] cursor-pointer">Home</Link>
-                    <p className="hover:text-[#1E2A38] cursor-pointer">Properties</p>
+                    <Link href="/properties" className="hover:text-[#1E2A38] cursor-pointer">Properties</Link>
                 </div>
                 <div className="flex gap-4 items-center font-bold text-sm">
                     <p>Home</p>
