@@ -5,8 +5,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="flex flex-col gap-20">
-        <h1>VENUES :D</h1>
+      <div className="flex flex-col gap-20 mx-70 py-5">
         <Property />
       </div>
     </>
