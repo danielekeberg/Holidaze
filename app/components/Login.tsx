@@ -11,8 +11,8 @@ export default function Login() {
                     <img src="/logo.png" className="h-10"/>
                 </div>
                 <div className="mb-5">
-                    <h1 className="text-2xl">Logg på eller lag en konto</h1>
-                    <p>Få tilgang til en verden av reiser med én konto på tvers av Expedia, Hotels-com og Vrbo.</p>
+                    <h1 className="text-2xl">Sign in</h1>
+                    <p>Sign in</p>
                 </div>
                 <div>
                     <form className="flex flex-col gap-5">
