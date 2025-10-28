@@ -44,6 +44,7 @@ export default function Venues() {
                 const data = await res.json();
                 const venues = data.data;
                 setVenues(venues);
+                console.log(venues);
             } catch(err) {
                 setErr(err);
             }
@@ -51,15 +52,37 @@ export default function Venues() {
         fetchVenues();
     }, [])
     return (
-        <>
-            <p>HELLO</p>
-            {venues.map((v, i) => (
-                <div key={i} className="mb-10 border-b border-black">
-                    <p>{v.id}</p>
-                    <p>{v.media[0].url ? v.media[0].url : 'none'}</p>
-                    <img src={v.media[0].url} className="h-50" />
-                </div>
-            ))}
-        </>
+        <div className="flex flex-col gap-10">
+            <div>
+                <h1 className="font-bold text-3xl mt-10">Explore Properties</h1>
+                <p className="text-neutral-600">Find your perfect vacation rental</p>
+            </div>
+            <div className="grid grid-cols-3 gap-5">
+                {venues.map((v, i) => (
+                    <div key={i} className="rounded-md overflow-hidden shadow">
+                        <div>
+                            <img src={v.media[0]?.url} className="h-50 w-full object-cover" />
+                        </div>
+                        <div className="p-4">
+                            <div className="flex items-center justify-between">
+                                <h5 className="w-2/3 font-bold">{v.name}</h5>
+                                <div className="flex items-center gap-1">
+                                    <img src="/star.svg" className="h-5" />
+                                    <p className="font-bold">{v.rating}</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-2 items-center mt-2">
+                                <img src="/location.svg" className="h-5" />
+                                <p className="text-neutral-600">{v.location.city}, {v.location.country}</p>
+                            </div>
+                            <div className="flex gap-2 items-center mt-2">
+                                <h1 className="text-xl font-bold">${v.price}</h1>
+                                <span className="text-neutral-600">/ night</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     )
 }
