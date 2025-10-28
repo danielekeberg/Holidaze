@@ -119,7 +119,7 @@ export default function Property() {
                                 {meta.pets && (
                                     <div className="flex items-center gap-2 px-5 py-2 border border-neutral-400/60 rounded-xl">
                                         <img src="/pets.svg" className="h-5" />
-                                        <p>WiFi Available</p>
+                                        <p>Pets Allowed</p>
                                     </div>
                                 )}
                                 {meta.breakfast && (
