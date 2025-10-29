@@ -10,11 +10,9 @@ export default function Home() {
       <Header />
       <div className="flex flex-col gap-20">
         <Hero />
-        <div className="mx-70 flex flex-col gap-20">
+        <div className="mx-70 flex flex-col gap-20 h-screen">
         <Popular />
         <Featured />
-
-        {/* <Venues /> */}
         </div>
       </div>
     </>
