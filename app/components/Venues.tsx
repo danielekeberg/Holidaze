@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 type Venue = {
     created: string;
@@ -59,7 +60,7 @@ export default function Venues() {
             </div>
             <div className="grid grid-cols-3 gap-5">
                 {venues.map((v, i) => (
-                    <div key={i} className="rounded-md overflow-hidden shadow">
+                    <Link href={`../venue/${v.id}`} key={i} className="rounded-md overflow-hidden shadow">
                         <div>
                             <img src={v.media[0]?.url} className="h-50 w-full object-cover" />
                         </div>
@@ -80,7 +81,7 @@ export default function Venues() {
                                 <span className="text-neutral-600">/ night</span>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>
