@@ -4,6 +4,39 @@ import { useEffect, useState, FormEvent } from "react";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [psw, setPsw] = useState("");
+    const [err, setErr] = useState<any>();
+
+    async function login() {
+        try {
+            const res = await fetch('https://v2.api.noroff.dev/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: psw,
+                })
+            })
+            console.log(email)
+            console.log(psw)
+            const data = await res.json();
+            console.log(data);
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('token', data.data.accessToken);
+            localStorage.setItem('username', data.data.name);
+            if(!res.ok) {
+                console.log("lol")
+                return;
+            }
+            console.log(res);
+        } catch(err) {
+            setErr(err);
+        }
+    }
+
+    
+
     return (
         <div className="my-5 flex justify-center">
             <div className="w-125">
@@ -24,7 +57,7 @@ export default function Login() {
                             <input className="peer w-full border border-neutral-500 rounded pt-5 pb-1 px-2" placeholder=" " type="password" id="password" onChange={(e) => setPsw(e.target.value)} />
                             <label htmlFor="password" className="absolute left-2 text-neutral-900 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-neutral-600 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs">Password</label>
                         </div>
-                        <button className="bg-blue-500 py-2 rounded text-white font-bold">Login</button>
+                        <div onClick={login} className="bg-blue-500 py-2 rounded text-white font-bold">Login</div>
                     </form>
                 </div>
             </div>
