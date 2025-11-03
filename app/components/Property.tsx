@@ -1,6 +1,7 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useParams } from "next/navigation";
+import Booking from "@/app/components/Booking";
 
 type Venue = {
     created: string;
@@ -141,7 +142,7 @@ export default function Property() {
                         <h3 className="font-bold text-2xl">${venue.price}</h3>
                         <span className="text-neutral-600">/ night</span>
                     </div>
-                    <p className="font-bold text-sm">Select dates</p>
+                    <Booking />
                 </div>
             </div>
         </div>

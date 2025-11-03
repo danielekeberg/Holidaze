@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import MyBookings from '@/app/components/MyBookings';
 
 export default function Dashboard() {
     const [profile, setProfile] = useState<any>([]);
@@ -45,26 +46,26 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div className="text-center">
-                            <h5 className="text-xl font-[400]">{profile.name}</h5>
+                            <h5 className="text-xl font-normal">{profile.name}</h5>
                             <p className="text-sm text-neutral-600">{profile.email}</p>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <div className="flex gap-3 items-center bg-blue-500 p-2 rounded-md text-white text-sm font-[500] cursor-pointer">
+                            <div className="flex gap-3 items-center bg-blue-500 p-2 rounded-md text-white text-sm font-medium cursor-pointer">
                                 <img src="/cal-white.svg" className="h-5" />
                                 <p>My Trips</p>
                             </div>
-                            <div className="flex gap-3 p-2 rounded-md text-sm font-[500] cursor-pointer">
+                            <div className="flex gap-3 p-2 rounded-md text-sm font-medium cursor-pointer">
                                 <img src="/calendar.svg" className="h-5" />
                                 <p>Saved</p>
                             </div>
-                            <div className="flex gap-3 p-2 rounded-md text-sm font-[500] cursor-pointer">
+                            <div className="flex gap-3 p-2 rounded-md text-sm font-medium cursor-pointer">
                                 <img src="/calendar.svg" className="h-5" />
                                 <p>Profile</p>
                             </div>
                         </div>
                     </div>
                     <div className="w-full border border-black rounded-md">
-                        <p>Hello</p>
+                        <MyBookings />
                     </div>
                 </div>
             </div>

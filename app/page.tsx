@@ -3,6 +3,7 @@ import Venues from "@/app/components/Venues";
 import Hero from "@/app/components/Hero";
 import Popular from "@/app/components/Popular";
 import Featured from "@/app/components/Featured";
+import Footer from "@/app/components/Footer";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <Featured />
         </div>
       </div>
+      <Footer />
     </>
   );
 }
