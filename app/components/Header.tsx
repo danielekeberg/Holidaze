@@ -19,7 +19,7 @@ export default function Header() {
                 </Link>
                 <div className="flex gap-4 items-center font-bold text-sm">
                     <Link href="../" className="hover:text-[#1E2A38] cursor-pointer">Home</Link>
-                    <Link href="/properties" className="hover:text-[#1E2A38] cursor-pointer">Properties</Link>
+                    <Link href="/properties/displayall" className="hover:text-[#1E2A38] cursor-pointer">Properties</Link>
                 </div>
                 {isLoggedIn ?
                     <div className="flex gap-4 items-center font-bold text-sm">

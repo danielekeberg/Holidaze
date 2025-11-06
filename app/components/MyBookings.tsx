@@ -23,6 +23,7 @@ export default function MyBookings() {
                 })
                 const data = await res.json();
                 const book = data.data;
+                console.log(book);
                 setBookings(book);
                 if(!res.ok) {
                     throw new Error(data.errors[0])
@@ -34,12 +35,16 @@ export default function MyBookings() {
         fetchBookings();
     }, []);
 
-    console.log(bookings)
+    bookings.forEach((id) => {
+        console.log(id);
+    }, [])
+
     return(
         <>
             {bookings.map((b: Booking, i: number) => (
                 <div key={i}>
                     <p>{b.id}</p>
+                    
                 </div>
             ))}
         </>

@@ -1,5 +1,4 @@
 import Header from "@/app/components/Header";
-import Venues from "@/app/components/Venues";
 import Hero from "@/app/components/Hero";
 import Popular from "@/app/components/Popular";
 import Featured from "@/app/components/Featured";
