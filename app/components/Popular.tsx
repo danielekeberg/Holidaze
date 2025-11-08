@@ -60,17 +60,17 @@ export default function Popular() {
                     <h1 className="text-4xl font-bold">Popular Destination</h1>
                     <p className="text-neutral-600">Explore our most loved locations</p>
                 </div>
-                <div className="flex gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                     {venues.map((l, i) => (
-                        <Link href={`/venue/${l.id}`} key={i} className="rounded-xl overflow-hidden h-60 w-1/3 cursor-pointer relative group">
+                        <Link href={`/venue/${l.id}`} key={i} className="rounded-xl overflow-hidden h-60 cursor-pointer relative group">
                             <div>
-                            <div className="relative">
-                                <img src={l.media[0].url ? l.media[0].url : '/img-notfound.png'} />
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 to-black/80" />
-                            </div>
-                            <div className="absolute left-5 bottom-5">
-                                <h4 className="text-white font-bold text-xlz-1 group-hover:underline">{l.name}</h4>
-                            </div>
+                                <div className="relative">
+                                    <img src={l.media[0].url ? l.media[0].url : '/img-notfound.png'} className="h-100" />
+                                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 to-black/80" />
+                                </div>
+                                <div className="absolute left-5 bottom-5">
+                                    <h4 className="text-white font-bold text-xlz-1 group-hover:underline">{l.name}</h4>
+                                </div>
                             </div>
                         </Link>
                     ))}

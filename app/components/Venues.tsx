@@ -99,34 +99,12 @@ export default function Venues() {
 
     return (
         <>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-10 mx-5 md:mx-0">
                 <div>
                     <h1 className="font-bold text-3xl mt-10">Explore Properties</h1>
                     <p className="text-neutral-600">Find your perfect vacation rental</p>
                 </div>
-                <div className="flex gap-10">
-                    <select 
-                        id="popular"
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="border border-neutral-300 p-2 cursor-pointer"
-                    >
-                        <option value="popular">Most Popular</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="price-asc">Price: Low to High</option>
-                        <option value="rated">Highest Rated</option>
-                    </select>
-                    <select 
-                        id="popular"
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value)}
-                        className="border border-neutral-300 p-2 cursor-pointer"
-                    >
-                        <option value="popular">Most Popular</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="price-asc">Price: Low to High</option>
-                        <option value="rated">Highest Rated</option>
-                    </select>
+                <div className="flex gap-10 justify-end">
                     <select 
                         id="popular"
                         value={sortBy}
@@ -146,7 +124,7 @@ export default function Venues() {
                     :
                     ''
                 }
-                <div className="grid grid-cols-3 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {displayedVenues.map((v, i) => (
                         <Link href={`../venue/${v.id}`} key={i} className="rounded-md overflow-hidden shadow group">
                             <div>

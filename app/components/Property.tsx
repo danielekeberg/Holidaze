@@ -52,7 +52,7 @@ export default function Property() {
     const [loading, setLoading] = useState(false);
     const [fromDate, setFromDate] = useState<any>("");
     const [toDate, setToDate] = useState<any>("");
-    const [guests, setGuests] = useState<any>(2);
+    const [guests, setGuests] = useState<any>(1);
     const params = useParams();
     const { id } = params;
 
@@ -107,11 +107,7 @@ export default function Property() {
         }
     }
 
-    const days = fromDate && toDate ? Math.ceil((new Date(toDate) - new Date(fromDate)) / (1000 * 60 * 60 * 24)) : 0;
-    const today = new Date().toISOString().split("T")[0];
-    const sevenDaysFromNow = new Date();
-    sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
-    const defaultDate = sevenDaysFromNow.toISOString().split("T")[0];
+    const days = fromDate && toDate ? Math.ceil((new Date(toDate).getTime() - new Date(fromDate).getTime()) / (1000 * 60 * 60 * 24)) : 0;
     
     if (!venue) {
         return (
@@ -137,25 +133,19 @@ export default function Property() {
                 </div>
             </div>
             <div className="flex gap-5 rounded-3xl overflow-hidden h-125">
-                <img src={venue.media?.[0]?.url ?? '#'} className="w-1/2 object-cover" />
-                <div className="grid grid-cols-2 gap-5">
-                    <img src={venue.media?.[0]?.url ?? '#'} className="h-full object-cover"/>
-                    <img src={venue.media?.[0]?.url ?? '#'} className="h-full object-cover"/>
-                    <img src={venue.media?.[0]?.url ?? '#'} className="h-full object-cover"/>
-                    <img src={venue.media?.[0]?.url ?? '#'} className="h-full object-cover"/>
-                </div>
+                <img src={venue.media?.[0]?.url ?? '#'} className="object-cover w-full" />
             </div>
-            <div className="flex gap-10">
-                <div className="w-2/3 flex flex-col gap-10">
+            <div className="grid  gap-10">
+                <div className="md:w-2/3 flex flex-col gap-10">
                     <div className="flex justify-between border border-neutral-400/50 p-5 rounded-xl items-center">
-                        <div className="flex gap-5 items-center">
-                            <div className="bg-blue-100 rounded-full h-12 w-12 flex items-center justify-center text-xl border border-neutral-400/50">
+                        <div className="flex gap-2 md:gap-5 items-center">
+                            <div className="bg-blue-100 rounded-full h-12 w-12 flex items-center justify-center text-xl border border-neutral-400/50 hidden md:flex ">
                                 <p>{venue.owner.name?.[0].toUpperCase()}</p>
                             </div>
                             <h5 className="font-bold">Hosted by {venue.owner.name}</h5>
                         </div>
                         <div>
-                            <Link href={`../profile/${venue.owner.name}`} className="hover:bg-blue-500 hover:text-white p-2 font-bold rounded transition">View Profile</Link>
+                            <Link href={`../profile/${venue.owner.name}`} className="hover:bg-blue-500 bg-blue-500 text-white md:bg-transparent md:text-black p-2 hover:text-white md:p-2 font-bold rounded transition text-center md:text-left">View Profile</Link>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
@@ -165,7 +155,7 @@ export default function Property() {
                     <div className="flex flex-col gap-3">
                         <h3 className="font-bold text-2xl">What this place offers</h3>
                         {meta && (
-                            <div className="grid grid-cols-3 gap-2 font-bold">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2 font-bold">
                                 {meta.wifi && (
                                     <div className="flex items-center gap-2 px-5 py-2 border border-neutral-400/60 rounded-xl">
                                         <img src="/wifi.svg" className="h-5" />
@@ -198,7 +188,7 @@ export default function Property() {
                         )}
                     </div>
                 </div>
-                <div className="w-1/3 border rounded-xl border-neutral-500/30 p-4 h-full">
+                <div className="md:w-1/3 border rounded-xl border-neutral-500/30 p-4 h-full">
                     <div className="flex gap-2 items-end mb-5">
                         <h3 className="font-bold text-2xl">${venue.price}</h3>
                         <span className="text-neutral-600">/ night</span>
@@ -209,11 +199,11 @@ export default function Property() {
                             <div className="flex flex-col gap-5 py-5">
                                 <div>
                                     <p className="font-bold">From:</p>
-                                    <input className="border rounded-md border-neutral-400/50 w-full p-2" type="date" id="fromDate" value={today} onChange={(e) => setFromDate(e.target.value)} />
+                                    <input className="border rounded-md border-neutral-400/50 w-[95%] md:w-full p-2" type="date" id="fromDate" onChange={(e) => setFromDate(e.target.value)} />
                                 </div>
                                 <div>
                                     <p className="font-bold">To:</p>
-                                    <input className="border rounded-md border-neutral-400/50 w-full p-2" type="date" id="toDate" value={defaultDate} onChange={(e) => setToDate(e.target.value)} />
+                                    <input className="border rounded-md border-neutral-400/50 w-[95%] md:w-full p-2" type="date" id="toDate" onChange={(e) => setToDate(e.target.value)} />
                                 </div>
                             </div>
                             <div>
@@ -228,19 +218,14 @@ export default function Property() {
                         </div>
                         <button onClick={Book} className="bg-blue-500 p-2 rounded-md w-full cursor-pointer text-white font-bold">Book Now</button>
                         <div className="mt-5 text-neutral-500">
-                            <div className="mb-5">
-                                <div className="flex justify-between">
-                                    <p>${venue.price} x {days} nights</p>
-                                    <p>${venue.price * days}</p>
+                            <div>
+                                <div className="flex justify-end text-black font-bold">
+                                    <p>Total</p>
                                 </div>
                                 <div className="flex justify-between">
-                                    <p>Service fee</p>
-                                    <p>$225</p>
+                                    <p>${venue.price} x {days} {days === 1 ? 'night': 'nights'}</p>
+                                    <p>${venue.price * (days + 1)}</p>
                                 </div>
-                            </div>
-                            <div className="flex justify-between text-black font-bold">
-                                <p>Total</p>
-                                <p>${(venue.price * days) + 225}</p>
                             </div>
                         </div>
                     </div>

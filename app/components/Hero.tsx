@@ -24,11 +24,11 @@ export default function Hero() {
             </div>
             <div className="relative flex flex-col z-10 h-full w-full items-center justify-center">
                 <div className="text-center px-4 w-full mb-8">
-                    <h1 className="text-6xl text-white font-extrabold text-center drop-shadow-[0_2px_6px_rgba(0,0,0,0.65)] mb-3">Find your next adventure</h1>
-                    <h1 className="text-2xl text-white text-center drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">Discover amazing places to stay around the world</h1>
+                    <h1 className="text-2xl md:text-6xl text-white font-extrabold text-center drop-shadow-[0_2px_6px_rgba(0,0,0,0.65)] mb-3">Find your next adventure</h1>
+                    <h1 className="text-md md:text-2xl text-white text-center drop-shadow-[0_2px_6px_rgba(0,0,0,0.85)]">Discover amazing places to stay around the world</h1>
                 </div>
                 <form className="bg-white flex gap-5 p-5 rounded-xl border border-neutral-800/30 justify-center items-center" onSubmit={handleSubmit}>
-                    <div className="border-r border-neutral-800/30 px-2 w-100">
+                    <div className="border-r border-neutral-800/30 px-2 md:w-100">
                         <p className="text-sm mb-2 mx-1 text-neutral-600 font-bold">Location</p>
                         <div className="flex gap-2 items-center">
                             <img src="/location.svg" className="h-5" />

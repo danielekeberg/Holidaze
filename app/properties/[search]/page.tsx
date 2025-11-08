@@ -6,10 +6,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <div className="flex flex-col mx-70">
+      <div className="flex flex-col md:mx-70">
         <Venues />
       </div>
-      <Footer />
     </>
   );
 }

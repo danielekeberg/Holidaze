@@ -1,4 +1,4 @@
-export default function GuestSelect({ maxGuests }) {
+export default function GuestSelect({ maxGuests }: { maxGuests: number }) {
     return (
         <>
         {Array.from({ length: maxGuests }, (_, i) => (

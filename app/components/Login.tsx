@@ -21,12 +21,12 @@ export default function Login() {
             })
             const data = await res.json();
             if(!res.ok) {
-                console.log("lol")
-                return;
+                console.error(data);
             }
             localStorage.setItem('loggedIn', 'true');
             localStorage.setItem('token', data.data.accessToken);
             localStorage.setItem('username', data.data.name);
+            localStorage.setItem('manager', data.venueManager)
             window.location.href = '../';
         } catch(err) {
             setErr(err);
