@@ -51,7 +51,7 @@ export default function Header() {
 
     return (
         <>
-            <div className="flex sticky top-0 z-999 justify-between items-center px-5 md:px-[15%] py-5 items-center text-[#1E2A38] bg-white/70 border-b border-neutral-800/20 text-neutral-600 backdrop-blur-sm">
+            <div className="flex sticky top-0 z-999 justify-between items-center px-5 md:px-[15%] py-5 text-neutral-600 bg-white/70 border-b border-neutral-800/20 backdrop-blur-sm">
                 <Link href="../" className="hidden md:block">
                     <img className="h-10" src="/logo.png" />
                 </Link>
@@ -60,7 +60,7 @@ export default function Header() {
                     <Link href="/properties/displayall" className="hover:text-[#1E2A38] cursor-pointer">Properties</Link>
                 </div>
                 <div>
-                    <button onClick={handleHamburger} className="font-bold cursor-pointer text-3xl md:text-sm">&#9776;</button>
+                    <button onClick={handleHamburger} className="font-bold cursor-pointer text-3xl md:text-md">&#9776;</button>
                     <div className="relative">
                         {hamburger ? 
                             <div className="absolute top-0 right-0 bg-white border border-neutral-400/60 w-40 rounded-xl text-center overflow-hidden">
@@ -103,24 +103,6 @@ export default function Header() {
                     </div>
                     
                 </div>
-                {/* {isLoggedIn ?
-                    <div className="flex gap-4 items-center font-bold text-sm">
-                        <div className="flex gap-5">
-                            <button onClick={handleLogout} className="cursor-pointer">
-                                <img src="/logout.svg" className="h-5" />    
-                            </button>
-                            <Link href={`/profile/${username}`} className="text-white bg-blue-500 p-2 rounded-md">
-                                <img src="/user.svg" className="h-5" />
-                            </Link>
-                        </div>
-                    </div>
-                    :
-                    <div className="flex gap-4 items-center font-bold text-sm">
-                    <Link href="/login" className="text-white bg-blue-500 p-2 rounded-md">
-                        <p>Sign in</p>
-                    </Link>
-                </div>
-                } */}
             </div>
         </>
         

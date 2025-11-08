@@ -44,13 +44,13 @@ export default function Featured() {
                     {venues.map((l, i) => (
                         <Link href={`/venue/${l.id}`} key={i} className="rounded-xl overflow-hidden h-50 cursor-pointer relative group">
                             <div>
-                            <div className="relative">
-                                <img src={l.media[0].url ? l.media[0].url : '/img-notfound.png'} />
-                                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 to-black/80" />
-                            </div>
-                            <div className="absolute left-5 bottom-5">
-                                <h4 className="text-white font-bold text-xlz-1 group-hover:underline">{l.name}</h4>
-                            </div>
+                                <div className="relative">
+                                    <img src={l.media[0].url ? l.media[0].url : '/img-notfound.png'} className="h-75" />
+                                    <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/80" />
+                                </div>
+                                <div className="absolute left-5 bottom-5">
+                                    <h4 className="text-white font-bold text-xlz-1 group-hover:underline">{l.name}</h4>
+                                </div>
                             </div>
                         </Link>
                     ))}

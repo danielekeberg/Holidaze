@@ -139,7 +139,7 @@ export default function Property() {
                 <div className="md:w-2/3 flex flex-col gap-10">
                     <div className="flex justify-between border border-neutral-400/50 p-5 rounded-xl items-center">
                         <div className="flex gap-2 md:gap-5 items-center">
-                            <div className="bg-blue-100 rounded-full h-12 w-12 flex items-center justify-center text-xl border border-neutral-400/50 hidden md:flex ">
+                            <div className="bg-blue-100 rounded-full h-12 w-12 items-center justify-center text-xl border border-neutral-400/50 hidden md:flex ">
                                 <p>{venue.owner.name?.[0].toUpperCase()}</p>
                             </div>
                             <h5 className="font-bold">Hosted by {venue.owner.name}</h5>
