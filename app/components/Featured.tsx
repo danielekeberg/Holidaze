@@ -40,7 +40,7 @@ export default function Featured() {
                     <h1 className="text-4xl font-bold">Featured Stays</h1>
                     <p className="text-neutral-600">Handpicked properties just for you</p>
                 </div>
-                <div className="grid grid-cols-4 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
                     {venues.map((l, i) => (
                         <Link href={`/venue/${l.id}`} key={i} className="rounded-xl overflow-hidden h-50 cursor-pointer relative group">
                             <div>
@@ -54,6 +54,11 @@ export default function Featured() {
                             </div>
                         </Link>
                     ))}
+                </div>
+                <div className="flex justify-center mt-10">
+                    <Link href="../properties/displayall" className="hover:bg-blue-500 bg-blue-500 md:bg-transparent text-white md:text-black transition p-2 hover:text-white rounded-md">
+                        <p className="font-bold">View All Venues</p>
+                    </Link>
                 </div>
             </div>
         </div>
