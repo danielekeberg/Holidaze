@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import Loading from "@/app/components/Loading";
 import GuestSelect from "@/app/components/GuestSelect";
+import Edit from "@/app/components/Edit";
 
 type Venue = {
     created: string;
@@ -45,19 +46,26 @@ type Meta = {
     wifi: boolean;
 }
 
-export default function Property() {
+export default function Venue() {
     const [venue, setVenue] = useState<Venue | null>(null);
     const [meta, setMeta] = useState<Meta | null>(null);
     const [err, setErr] = useState<any>();
     const [loading, setLoading] = useState(false);
     const [fromDate, setFromDate] = useState<any>("");
     const [toDate, setToDate] = useState<any>("");
+    const [isLoggedIn, setIsLoggedIn] = useState<any>("");
     const [guests, setGuests] = useState<any>(1);
+    const [user, setUser] = useState<any>("");
+    const [toggleEdit, setToggleEdit] = useState<boolean>(false);
     const params = useParams();
     const { id } = params;
 
     useEffect(() => {
         setLoading(true);
+        const loggedIn = localStorage.getItem("loggedIn");
+        const username = localStorage.getItem("username");
+        setUser(username);
+        setIsLoggedIn(loggedIn);
         async function fetchProperty() {
             try {
                 const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true`, {
@@ -80,6 +88,7 @@ export default function Property() {
     }, [id])
 
     const Book = async () => {
+        setLoading(true);
         const auth = localStorage.getItem('token');
         try {
             const res = await fetch('https://v2.api.noroff.dev/holidaze/bookings', {
@@ -104,7 +113,16 @@ export default function Property() {
             console.log(data); 
         } catch(err) {
             console.error(err)
+        } finally {
+            setLoading(false);
         }
+    }
+
+    const handleToggle = () => {
+        if(toggleEdit) {
+            return setToggleEdit(false);
+        }
+        setToggleEdit(true);
     }
 
     const days = fromDate && toDate ? Math.ceil((new Date(toDate).getTime() - new Date(fromDate).getTime()) / (1000 * 60 * 60 * 24)) : 0;
@@ -119,8 +137,33 @@ export default function Property() {
 
     return(
         <div className="flex flex-col gap-5">
-            <div className="flex justify-between">
+            {toggleEdit ?
+                <>
+                    <div className="flex justify-between">
+                        <div>
+                            <h1 className="text-3xl font-bold">Edit Venue Details</h1>
+                            <p className="text-neutral-700 mb-10 text-center md:text-left">Edit your venue details</p>
+                        </div>
+                        <div>
+                            <button onClick={handleToggle} className="cursor-pointer">
+                                <img src="/edit.svg"  className="h-7 w-7" title="Edit venue" />
+                            </button>
+                        </div>
+                    </div>
+                    <Edit />
+                </>
+            :
+                null}
+            <div className="flex justify-between items-center">
                 <h1 className="text-4xl font-bold">{venue.name}</h1>
+                {venue.owner.name != user ? 
+                null
+                :
+                <div>
+                    <button onClick={handleToggle} className="cursor-pointer">
+                        <img src="/edit.svg"  className="h-7 w-7" title="Edit venue" />
+                    </button>
+                </div>}
             </div>
             <div className="flex gap-5 text-neutral-600">
                 <div className="flex gap-1">
@@ -135,7 +178,7 @@ export default function Property() {
             <div className="flex gap-5 rounded-3xl overflow-hidden h-125">
                 <img src={venue.media?.[0]?.url ?? '#'} className="object-cover w-full" />
             </div>
-            <div className="grid  gap-10">
+            <div className="grid md:flex gap-10">
                 <div className="md:w-2/3 flex flex-col gap-10">
                     <div className="flex justify-between border border-neutral-400/50 p-5 rounded-xl items-center">
                         <div className="flex gap-2 md:gap-5 items-center">
@@ -194,6 +237,8 @@ export default function Property() {
                         <span className="text-neutral-600">/ night</span>
                     </div>
                     <div className="flex flex-col justify-between h-[85%]">
+                        {isLoggedIn ?
+                        <>
                         <div>
                             <p className="font-bold text-sm">Select dates</p>
                             <div className="flex flex-col gap-5 py-5">
@@ -216,6 +261,7 @@ export default function Property() {
                                 </select>
                             </div>
                         </div>
+                        
                         <button onClick={Book} className="bg-blue-500 p-2 rounded-md w-full cursor-pointer text-white font-bold">Book Now</button>
                         <div className="mt-5 text-neutral-500">
                             <div>
@@ -228,6 +274,13 @@ export default function Property() {
                                 </div>
                             </div>
                         </div>
+                        </>
+                        :
+                        <Link href="../login">
+                            <p className="text-center bg-blue-500 text-white py-2 px-5 rounded-md cursor-pointer hover:bg-blue-400">Login to Book Venue</p>
+                        </Link>
+                        }
+                        
                     </div>
                 </div>
             </div>

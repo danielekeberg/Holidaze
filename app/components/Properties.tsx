@@ -36,7 +36,7 @@ type Venue = {
 
 const PAGE_SIZE = 20;
 
-export default function Venues() {
+export default function Properties() {
     const [loading, setLoading] = useState(true);
     const [venues, setVenues] = useState<Venue[]>([]);
     const [sortBy, setSortBy] = useState("popular");
@@ -64,6 +64,7 @@ export default function Venues() {
                     setHasMore(false);
                 }
                 setLoading(false);
+                console.log(data);
             } catch(err) {
                 setErr(err);
             }
