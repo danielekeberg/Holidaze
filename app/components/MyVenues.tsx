@@ -54,24 +54,25 @@ export default function MyVenues() {
         <>
             {venues ? 
                 venues.map((v: Venue, i: number) => (
-                    <Link href={`../venue/${v.id}`} key={i} className="grid md:flex md:items-center border m-2 bg-neutral-100 border-neutral-300/60 md:p-2 rounded-xl">
-                        <div className="md:w-50 h-50 m-2 border-neutral-300/60">
-                            <img src={v.media[0].url} className="h-50 w-full object-fit rounded-md" />
+                    <Link href={`../venue/${v.id}`} key={i} className="grid md:flex border m-2 bg-neutral-100 border-neutral-300/60 pb-2 md:pb-0 rounded-xl">
+                        <div className="md:w-50 md:h-25 h-50 m-2 border-neutral-300/60">
+                            <img src={v.media[0].url} className="h-50 md:h-25 w-full object-fit rounded-md" />
                         </div>
                         <div className="md:flex md:justify-between w-full ml-3">
                             <div className="text-neutral-600">
-                                <h5 className="text-neutral-900 font-bold text-xl">{v.name}</h5>
-                                <div className="gap-1 items-center hidden md:flex">
-                                    <img src="/location.svg" className="h-5" />
-                                    <p>{v.location.city}, {v.location.country}</p>
-                                </div>
-                                <div className="grid grid-cols-2 md:grid-cols-1 mb-5">
-                                    <p>{v.location.city}, {v.location.country}</p>
-                                    <p className="text-right w-[85%]">${v.price}</p>
+                                <h5 className="text-neutral-900 font-bold text-xl md:text-2xl md:mt-2">{v.name}</h5>
+                                <div className="flex justify-between md:block w-[92%]">
+                                    <div className="gap-1 items-center flex">
+                                        <img src="/location.svg" className="h-5" />
+                                        <p>{v.location.city}, {v.location.country}</p>
+                                    </div>
+                                    <div>
+                                        <p>${v.price}</p>
+                                    </div>
                                 </div>
                             </div>
                             <div className="items-center hidden md:flex">
-                                <button className="bg-blue-500 text-white rounded-xl py-2 px-5 cursor-pointer hover:bg-blue-400">View Details</button>
+                                <button className="bg-blue-500 text-white rounded-xl py-2 px-5 mx-5 cursor-pointer hover:bg-blue-400">View Details</button>
                             </div>
                         </div>
                     </Link>

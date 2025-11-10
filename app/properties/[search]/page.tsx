@@ -1,5 +1,5 @@
 import Header from "@/app/components/Header";
-import Venues from "@/app/components/Venues";
+import Properties from "@/app/components/Properties";
 import Footer from "@/app/components/Footer";
 
 export default function Home() {
@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <Header />
       <div className="flex flex-col md:mx-70">
-        <Venues />
+        <Properties />
       </div>
     </>
   );

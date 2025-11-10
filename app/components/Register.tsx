@@ -6,6 +6,7 @@ export default function Register() {
     const [email, setEmail] = useState<string | null>();
     const [password, setPassword] = useState<string | null>();
     const [err, setErr] = useState<any>();
+    const [venueManager, setVenueManager] = useState<boolean>(false);
 
     async function registerUser(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -49,6 +50,10 @@ export default function Register() {
                 <div className="relative">
                     <input className="peer w-full border border-neutral-500 rounded pt-5 pb-1 px-2" placeholder=" " type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
                     <label htmlFor="password" className="absolute left-2 text-neutral-900 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-neutral-600 peer-placeholder-shown:text-base peer-focus:top-1 peer-focus:text-xs">Password</label>
+                </div>
+                <div className="flex gap-2">
+                    <input type="checkbox" id="vManager" onChange={(e) => setVenueManager(e.target.checked)} />
+                    <label htmlFor="vManager">Venue Manager</label>
                 </div>
                 <button type="submit" className="bg-blue-500 py-2 rounded text-white font-bold cursor-pointer">Register</button>
             </form>

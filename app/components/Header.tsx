@@ -39,7 +39,7 @@ export default function Header() {
         localStorage.removeItem('loggedIn')
         localStorage.removeItem('token')
         localStorage.removeItem('username')
-        window.location.href = '../login'
+        window.location.href = '../'
     }
 
     const handleHamburger = () => {
@@ -60,7 +60,7 @@ export default function Header() {
                     <Link href="/properties/displayall" className="hover:text-[#1E2A38] cursor-pointer">Properties</Link>
                 </div>
                 <div>
-                    <button onClick={handleHamburger} className="font-bold cursor-pointer text-3xl md:text-md">&#9776;</button>
+                    <button onClick={handleHamburger} className="font-bold cursor-pointer text-3xl md:text-md xl:text-sm">&#9776;</button>
                     <div className="relative">
                         {hamburger ? 
                             <div className="absolute top-0 right-0 bg-white border border-neutral-400/60 w-40 rounded-xl text-center overflow-hidden">
@@ -71,7 +71,7 @@ export default function Header() {
                                         </Link>
                                         {venueManager === "true" ?
                                         <Link href="../create">
-                                            <p className="cursor-pointer hover:bg-neutral-200 py-2 px-5 border-b border-neutral-300">Create</p>
+                                            <p className="cursor-pointer hover:bg-neutral-200 py-2 px-5 border-b border-neutral-300">Create Venue</p>
                                         </Link>
                                         :
                                         null}

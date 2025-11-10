@@ -75,6 +75,9 @@ export default function Dashboard() {
                         <div className="text-center">
                             <h5 className="text-xl font-normal">{profile.name}</h5>
                             <p className="text-sm text-neutral-600">{profile.email}</p>
+                            <div className="flex justify-center">
+                                <p className="bg-neutral-200 font-bold py-2 px-5 border border-neutral-300/60 rounded-xl mt-2">{profile.venueManager ? 'Venue Manager' : 'Regular Account'}</p>
+                            </div>
                         </div>
                         <div className="flex flex-col gap-2">
                             <div className="flex gap-3 p-2 rounded-md text-sm font-medium cursor-pointer">

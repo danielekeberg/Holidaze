@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 
 export default function Create() {
     const [name, setName] = useState<string>("");
@@ -67,7 +67,7 @@ export default function Create() {
     return(
         <div>
             <div>
-                <div className="flex gap-3 items-center md:ml-0 ml-5">
+                <div className="flex gap-3 items-center">
                     <Link href="../">
                         <img src="/arrow-left.svg" className="h-5" />
                     </Link>
@@ -75,7 +75,7 @@ export default function Create() {
                 </div>
                 <p className="text-neutral-700 mb-10 text-center md:text-left">Add your venue details to start hosting guests</p>
             </div>
-            <div className="md:border border-neutral-300 rounded-2xl p-8">
+            <div className="md:border border-neutral-300 rounded-2xl md:p-8">
                 <div className="flex gap-3 items-center mb-5">
                     <div className="flex justify-center items-center w-7 h-7 rounded-full">
                             <img src="/info.svg" />
@@ -118,26 +118,26 @@ export default function Create() {
                         <h5 className="text-2xl font-bold">Amenities</h5>
                     </div>
                     <div className="grid xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-5">
-                        <div className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl">
-                            <input type="checkbox" className="h-5 w-5 cursor-pointer" onChange={(e) => setWifi(e.target.checked)} />
+                        <label htmlFor="wifi" className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl cursor-pointer">
+                            <input type="checkbox" className="h-5 w-5 cursor-pointer" id="wifi" onChange={(e) => setWifi(e.target.checked)} />
                             <img src="/wifi.svg" className="h-5" />
                             <p>WiFi</p>
-                        </div>
-                        <div className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl">
-                            <input type="checkbox" className="h-5 w-5 cursor-pointer" onChange={(e) => setParking(e.target.checked)} />
+                        </label>
+                        <label htmlFor="parking" className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl cursor-pointer">
+                            <input type="checkbox" className="h-5 w-5 cursor-pointer" id="parking" onChange={(e) => setParking(e.target.checked)} />
                             <img src="/car.svg" className="h-5" />
                             <p>Parking</p>
-                        </div>
-                        <div className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl">
-                            <input type="checkbox" className="h-5 w-5 cursor-pointer" onChange={(e) => setBreakfast(e.target.checked)} />
+                        </label>
+                        <label htmlFor="breakfast" className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl cursor-pointer">
+                            <input type="checkbox" className="h-5 w-5 cursor-pointer" id="breakfast" onChange={(e) => setBreakfast(e.target.checked)} />
                             <img src="/cutlery.svg" className="h-5" />
                             <p>Breakfast</p>
-                        </div>
-                        <div className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl">
-                            <input type="checkbox" className="h-5 w-5 cursor-pointer" onChange={(e) => setPets(e.target.checked)} />
+                        </label>
+                        <label htmlFor="pets" className="flex gap-5 items-center border border-neutral-300 p-3 rounded-xl cursor-pointer">
+                            <input type="checkbox" className="h-5 w-5 cursor-pointer" id="pets" onChange={(e) => setPets(e.target.checked)} />
                             <img src="/pets.svg" className="h-5" />
                             <p>Pets Allowed</p>
-                        </div>
+                        </label>
                     </div>
                     <div className="flex gap-3 items-center mb-2 mt-5">
                         <div className="flex justify-center items-center w-7 h-7 rounded-full">
