@@ -1,5 +1,5 @@
 'use client';
-import { useState, FormEvent } from "react";
+import { useState, } from "react";
 
 export default function Register() {
     const [name, setName] = useState<string | null>();
@@ -8,7 +8,7 @@ export default function Register() {
     const [err, setErr] = useState<any>();
     const [venueManager, setVenueManager] = useState<boolean>(false);
 
-    async function registerUser(e: FormEvent<HTMLFormElement>) {
+    async function registerUser(e: any) {
         e.preventDefault();
         try {
             const res = await fetch('https://v2.api.noroff.dev/auth/register', {
@@ -19,7 +19,8 @@ export default function Register() {
                 body: JSON.stringify({
                     name: name,
                     email: email,
-                    password: password
+                    password: password,
+                    venueManager: venueManager
                 })
             })
             const data = await res.json();
