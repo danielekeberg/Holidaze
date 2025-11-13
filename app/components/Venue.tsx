@@ -59,6 +59,7 @@ export default function Venue() {
     const [toggleEdit, setToggleEdit] = useState<boolean>(false);
     const params = useParams();
     const { id } = params;
+    const [hamburger, setHamburger] = useState<boolean>(false);
 
     useEffect(() => {
         setLoading(true);
@@ -125,6 +126,13 @@ export default function Venue() {
         setToggleEdit(true);
     }
 
+    const toggleHamburger = () => {
+        if(hamburger) {
+            return setHamburger(false);
+        }
+        setHamburger(true);
+    }
+
     const days = fromDate && toDate ? Math.ceil((new Date(toDate).getTime() - new Date(fromDate).getTime()) / (1000 * 60 * 60 * 24)) : 0;
     
     if (!venue) {
@@ -146,7 +154,7 @@ export default function Venue() {
                         </div>
                         <div>
                             <button onClick={handleToggle} className="cursor-pointer">
-                                <img src="/edit.svg"  className="h-7 w-7" title="Edit venue" />
+                                <img src="/arrow.svg"  className="h-7 w-7 rotate-270" title="Edit venue" />
                             </button>
                         </div>
                     </div>
@@ -154,15 +162,26 @@ export default function Venue() {
                 </>
             :
                 null}
-            <div className="flex justify-between items-center">
-                <h1 className="text-4xl font-bold">{venue.name}</h1>
+            <div className="flex justify-between items-center overflow-hidden">
+                <h1 className="text-3xl font-bold">{venue.name}</h1>
                 {venue.owner.name != user ? 
                 null
                 :
                 <div>
-                    <button onClick={handleToggle} className="cursor-pointer">
-                        <img src="/edit.svg"  className="h-7 w-7" title="Edit venue" />
+                    <button onClick={toggleHamburger} className="cursor-pointer font-bold" title="Click to open">
+                        &#9776;
                     </button>
+                    <div className="relative">
+                        {/* Hamburger is blocked by something someshow? */}
+                    {hamburger ?
+                        <div className="absolute top-0 right-0 bg-white border border-neutral-900">
+                            <button onClick={handleToggle} className="w-50 py-2 border-b border-neutral-900 cursor-pointer hover:bg-neutral-200">Edit</button>
+                            <button className="w-50 py-2 border-neutral-900 cursor-pointer hover:bg-neutral-200">Delete</button>
+                        </div>
+                    :
+                        null
+                    }
+                    </div>
                 </div>}
             </div>
             <div className="flex gap-5 text-neutral-600">
@@ -182,8 +201,8 @@ export default function Venue() {
                 <div className="md:w-2/3 flex flex-col gap-10">
                     <div className="flex justify-between border border-neutral-400/50 p-5 rounded-xl items-center">
                         <div className="flex gap-2 md:gap-5 items-center">
-                            <div className="bg-blue-100 rounded-full h-12 w-12 items-center justify-center text-xl border border-neutral-400/50 hidden md:flex ">
-                                <p>{venue.owner.name?.[0].toUpperCase()}</p>
+                            <div className="bg-blue-100 rounded-full h-12 w-12 items-center justify-center text-xl border border-neutral-400/50 hidden md:flex overflow-hidden">
+                                <img src={venue.owner.avatar.url} className="h-full" />
                             </div>
                             <h5 className="font-bold">Hosted by {venue.owner.name}</h5>
                         </div>
