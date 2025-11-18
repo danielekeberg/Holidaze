@@ -17,6 +17,7 @@ export default function Create() {
     const [zip, setZip] = useState<string>("");
     const [country, setCountry] = useState<string>("");
     const [continent, setContinent] = useState<string>("");
+    const [id, setId] = useState<string>("");
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
@@ -57,6 +58,8 @@ export default function Create() {
                 })
                 const data = await res.json();
                 console.log(data);
+                console.log(data.id);
+                window.location.href = `../venue/${data.data.id}`
             } catch(err) {
                 console.error(err);
             }
