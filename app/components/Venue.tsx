@@ -49,7 +49,7 @@ type Meta = {
 export default function Venue() {
     const [venue, setVenue] = useState<Venue | null>(null);
     const [meta, setMeta] = useState<Meta | null>(null);
-    const [err, setErr] = useState<any>();
+    const [err, setErr] = useState<boolean>(false);
     const [loading, setLoading] = useState(false);
     const [fromDate, setFromDate] = useState<any>("");
     const [toDate, setToDate] = useState<any>("");
@@ -81,7 +81,7 @@ export default function Venue() {
                 setMeta(meta);
                 setVenue(data.data);
             } catch(err) {
-                setErr(err);
+                setErr(true);
             }
         }
         fetchProperty();
@@ -116,6 +116,27 @@ export default function Venue() {
             console.error(err)
         } finally {
             setLoading(false);
+        }
+    }
+
+    const deleteVenue = async (e: any) => {
+        try {
+            const auth = localStorage.getItem('token');
+            const user = localStorage.getItem('username');
+            console.log(id);
+            const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${auth}`,
+                    'X-Noroff-API-Key': 'd937e2e1-dc41-4685-9054-22798ad19d5e',
+                    'Content-Type': 'application/json',
+                }
+            })
+            window.location.href = `../profile/${user}`;
+            const data = await res.json();
+            console.log(data);
+        } catch(err) {
+            console.error(err);
         }
     }
 
@@ -162,7 +183,7 @@ export default function Venue() {
                 </>
             :
                 null}
-            <div className="flex justify-between items-center overflow-hidden">
+            <div className="flex justify-between items-center">
                 <h1 className="text-3xl font-bold">{venue.name}</h1>
                 {venue.owner.name != user ? 
                 null
@@ -172,11 +193,13 @@ export default function Venue() {
                         &#9776;
                     </button>
                     <div className="relative">
-                        {/* Hamburger is blocked by something someshow? */}
                     {hamburger ?
-                        <div className="absolute top-0 right-0 bg-white border border-neutral-900">
-                            <button onClick={handleToggle} className="w-50 py-2 border-b border-neutral-900 cursor-pointer hover:bg-neutral-200">Edit</button>
-                            <button className="w-50 py-2 border-neutral-900 cursor-pointer hover:bg-neutral-200">Delete</button>
+                        <div className="absolute z-9999 top-0 bg-white right-0 border border-neutral-900">
+                            <button onClick={() => {
+                                handleToggle();
+                                toggleHamburger();
+                            }} className="w-50 py-2 border-b border-neutral-900 cursor-pointer hover:bg-neutral-200">Edit</button>
+                            <button onClick={deleteVenue} className="w-50 py-2 border-neutral-900 cursor-pointer hover:bg-neutral-200">Delete</button>
                         </div>
                     :
                         null
@@ -299,7 +322,6 @@ export default function Venue() {
                             <p className="text-center bg-blue-500 text-white py-2 px-5 rounded-md cursor-pointer hover:bg-blue-400">Login to Book Venue</p>
                         </Link>
                         }
-                        
                     </div>
                 </div>
             </div>
