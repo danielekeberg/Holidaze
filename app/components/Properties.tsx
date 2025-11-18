@@ -39,11 +39,11 @@ export default function Properties() {
     const [venues, setVenues] = useState<Venue[]>([]);
     const [sortBy, setSortBy] = useState("popular");
     const [err, setErr] = useState<any>();
-    const [query, setQuery] = useState("");
     const params = useParams();
     const { search } = params;
     const [hasMore, setHasMore] = useState(false);
     const [noVenues, setNoVenues] = useState(false);
+    const [searchInput, setSearchInput] = useState<string>("");
 
     useEffect(() => {
         setLoading(true);
@@ -69,15 +69,7 @@ export default function Properties() {
     }, []);
     
     const displayedVenues = useMemo(() => {
-        const q = query.trim().toLowerCase();
-        const filtered = q
-        ? venues.filter((p) => {
-            const t = p.name.toLowerCase();
-            const d = p.description.toLowerCase();
-            return t.includes(q) || d.includes(q);
-        })
-        : venues;
-        const sorted = [...filtered].sort((a, b) => {
+        const sorted = venues.sort((a, b) => {
             switch (sortBy) {
                 case 'popular':
                     return b._count?.bookings - a._count?.bookings;
@@ -92,7 +84,27 @@ export default function Properties() {
             }
         });
         return sorted;
-    }, [venues, query, sortBy]);
+    }, [venues, sortBy]);
+
+    async function searchVenues(e:any) {
+        e.preventDefault();
+        if(!searchInput) {
+            return;
+        }
+        setLoading(true);
+        try {
+            const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/search?q=${searchInput}`);
+            const data = await res.json();
+            const venues = data.data;
+            setVenues(venues);
+            console.log(data);
+
+        } catch(err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <>
@@ -102,12 +114,15 @@ export default function Properties() {
                     <p className="text-neutral-600">Find your perfect vacation rental</p>
                 </div>
                 <div className="flex flex-col md:flex-row gap-5 justify-between">
-                    <input type="text" placeholder="Fungerer ikke enda :(" className="p-2 border border-neutral-300" />
+                    <form onSubmit={searchVenues} className="flex gap-2 w-full">
+                        <input type="text" onChange={(e) => setSearchInput(e.target.value)} placeholder="Search" className="p-2 border border-neutral-300 bg-white w-full md:w-1/3" />
+                        <button type="submit" className="bg-blue-500 py-2 px-5 text-white cursor-pointer rounded-[2] hover:bg-blue-400">Search</button>
+                    </form>
                     <select 
                         id="popular"
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        className="border border-neutral-300 p-2 cursor-pointer"
+                        className="border bg-white border-neutral-300 p-2 cursor-pointer"
                     >
                         <option value="popular">Most Popular</option>
                         <option value="price-desc">Price: High to Low</option>
@@ -116,7 +131,7 @@ export default function Properties() {
                     </select>
                 </div>
                 {loading ?
-                    <div className="w-full">
+                    <div className="w-full flex justify-center">
                         <Spinner />
                     </div>
                     :
