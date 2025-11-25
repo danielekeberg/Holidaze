@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import Loading from "@/app/components/Loading";
@@ -46,6 +46,28 @@ type Meta = {
     wifi: boolean;
 }
 
+type Booking = {
+    id: string;
+    dateFrom: string;
+    dateTo: string;
+}
+
+const weekdays = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Des"];
+
+function startOfMonth(date:any) {
+    return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+function endOfMonth(date:any) {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0)
+}
+function addMonths(date:any, n:number) {
+    return new Date(date.getFullYear(), date.getMonth() + n, 1);
+}
+function getMondayIndex(jsDay:number) {
+    return (jsDay + 6) % 7;
+}
+
 export default function Venue() {
     const [venue, setVenue] = useState<Venue | null>(null);
     const [meta, setMeta] = useState<Meta | null>(null);
@@ -60,6 +82,41 @@ export default function Venue() {
     const params = useParams();
     const { id } = params;
     const [hamburger, setHamburger] = useState<boolean>(false);
+    const [currentMonth, setCurrentMonth] = useState(() => new Date());
+    const [bookedDays, setBookedDays] = useState<Set<string>>(new Set());
+
+    const calDays = useMemo(() => {
+        const start = startOfMonth(currentMonth);
+        const end = endOfMonth(currentMonth);
+        const startOffset = getMondayIndex(start.getDay());
+        const totalDays = end.getDate();
+        const cells = [];
+        for(let i = 0; i < startOffset; i++) {
+            cells.push(null);
+        }
+        for (let d = 1; d <= totalDays; d++) {
+            cells.push(new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d))
+        }
+        return cells;
+    }, [currentMonth])
+
+    const isSameDay = (a:any, b:any) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+    
+    function getDatesInRange(fromISO: string, toISO: string) {
+        const dates: string[] = [];
+        const start = new Date(fromISO);
+        const end = new Date(toISO);
+
+        start.setHours(0, 0, 0, 0);
+        end.setHours(0, 0, 0, 0);
+        const current = new Date(start);
+        while(current <= end) {
+            dates.push(current.toISOString().slice(0, 10));
+            current.setDate(current.getDate() + 1);
+        }
+
+        return dates;
+    }
 
     useEffect(() => {
         setLoading(true);
@@ -69,7 +126,7 @@ export default function Venue() {
         setIsLoggedIn(loggedIn);
         async function fetchProperty() {
             try {
-                const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true`, {
+                const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true&_bookings=true`, {
                     headers: {
                         "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZGFuaWVsZWtlYmVyZyIsImVtYWlsIjoiZGFuZWtlNzUxNjBAc3R1ZC5ub3JvZmYubm8iLCJpYXQiOjE3NjE1OTc2ODN9.OKeXS9-bygAHKddfK5XQyjhjhjeouMqDjTFH3fgsMcU`,
                         "X-Noroff-API-Key": `d937e2e1-dc41-4685-9054-22798ad19d5e`,
@@ -80,6 +137,9 @@ export default function Venue() {
                 console.log(data);
                 setMeta(meta);
                 setVenue(data.data);
+                const bookings = data.data.bookings as Booking[];
+                const allBooked = bookings.flatMap(booked => getDatesInRange(booked.dateFrom, booked.dateTo))
+                setBookedDays(new Set(allBooked));
             } catch(err) {
                 setErr(true);
             }
@@ -87,6 +147,7 @@ export default function Venue() {
         fetchProperty();
         setLoading(false);
     }, [id])
+    console.log(bookedDays);
 
     const Book = async () => {
         setLoading(true);
@@ -284,6 +345,50 @@ export default function Venue() {
                         <div>
                             <p className="font-bold text-sm">Select dates</p>
                             <div className="flex flex-col gap-5 py-5">
+                                <div className="w-full max-w-xl mx-auto p-4 rounded-2xl border-neutral-500/30 border">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <button onClick={() => setCurrentMonth(m => addMonths(m, -1))} className="px-3 cursor-pointer py-2 rounded-lg border hover:bg-gray-50">
+                                            ←
+                                        </button>
+                                        <h2>{months[currentMonth.getMonth()]} {currentMonth.getFullYear()}</h2>
+                                        <button onClick={() => setCurrentMonth(m => addMonths(m, +1))} className="px-3 cursor-pointer py-2 rounded-lg border hover:bg-gray-50">
+                                            →
+                                        </button>
+                                    </div>
+                                    <div className="grid grid-cols-7 text-sm mb-2">
+                                        {weekdays.map(day => (
+                                            <div key={day} className="text-center py-2">
+                                                {day.slice(0, 1)}
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="grid grid-cols-7 gap-2">
+                                        {calDays.map((date:any, idx:any) => {
+                                            if(!date) {
+                                                return <div key={idx} className="h-10" />;
+                                            }
+                                            const dayKey = date.toISOString().slice(0,10);
+                                            const isBooked = bookedDays.has(dayKey);
+                                            const today = isSameDay(date, new Date());
+
+                                            return(
+                                                <button key={idx} disabled={isBooked} className={["h-10 flex justify-center rounded-lg items-center text-sm", today ? "border border-black font-bold" : "border border-neutral-400", isBooked ? "bg-blue-200 text-blue-700 border border-blue-500 cursor-not-allowed" : ""].join(" ")}>
+                                                    {date.getDate()}
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                    <div className="flex gap-2 items-center">
+                                        <div className="mt-4 flex items-center gap-1 text-sm text-gray-700">
+                                            <div className="bg-blue-200 border border-blue-500 h-3 w-3 rounded-full" />
+                                            <p>= Booked</p>
+                                        </div>
+                                        <div className="mt-4 flex items-center gap-1 text-sm text-gray-700">
+                                            <div className="border border-black h-3 w-3 rounded-full" />
+                                            <p>= Today</p>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div>
                                     <p className="font-bold">From:</p>
                                     <input className="border rounded-md border-neutral-400/50 w-[95%] md:w-full p-2" type="date" id="fromDate" onChange={(e) => setFromDate(e.target.value)} />

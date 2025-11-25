@@ -89,8 +89,7 @@ export default function MyProfile() {
                             <img src={avatar} className="h-50 w-50 rounded bg-neutral-200" />
                         </div>
                     </div>
-                    <textarea defaultValue={bio} onChange={(e) => setBio(e.target.value)} className="h-40 bg-white w-full border border-neutral-400 rounded p-2 resize-none" />
-                    <div className="flex justify-end mt-2">
+                    <div className="flex justify-start mt-2">
                         <button type="submit" className="bg-blue-500 text-white p-2 rounded-md cursor-pointer hover:bg-blue-400">Edit Profile</button>
                     </div>
                 </form>
