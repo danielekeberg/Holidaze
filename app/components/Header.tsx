@@ -7,7 +7,6 @@ export default function Header() {
     const [username, setUsername] = useState<string | null>();
     const [venueManager, setVenueManager] = useState<string | null>();
     const [hamburger, setHamburger] = useState(false);
-    const menuRef = useRef(null);
 
     useEffect(() => {
         const loggedIn = localStorage.getItem('loggedIn')
@@ -75,21 +74,15 @@ export default function Header() {
                                         </Link>
                                         :
                                         null}
-                                        <Link href="">
+                                        <Link href="../about/">
                                             <p className="cursor-pointer hover:bg-neutral-200 py-2 px-5 border-b border-neutral-300 ">About Us</p>
-                                        </Link>
-                                        <Link href="">
-                                            <p className="cursor-pointer hover:bg-neutral-200 py-2 px-5 border-b border-neutral-300">Contact Us</p>
                                         </Link>
                                         <button onClick={handleLogout} className="cursor-pointer hover:bg-neutral-200 py-2 px-5 w-full">Logout</button>
                                     </>
                                 :
                                     <>
-                                        <Link href="">
+                                        <Link href="../about/">
                                             <p className="cursor-pointer hover:bg-neutral-200 py-2 px-5 border-b border-neutral-300">About Us</p>
-                                        </Link>
-                                        <Link href="">
-                                            <p className="cursor-pointer hover:bg-neutral-200 py-2 px-5 border-b border-neutral-300">Contact Us</p>
                                         </Link>
                                         <Link href="../login/">
                                             <p className="cursor-pointer w-full hover:bg-neutral-200 py-2 px-5 border-b border-neutral-300">Sign in</p>

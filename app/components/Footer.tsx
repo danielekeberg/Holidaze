@@ -13,7 +13,7 @@ export default function Footer() {
                 <div className="flex flex-col gap-5">
                     <h5 className="text-black font-bold">Company</h5>
                     <div className="text-sm">
-                        <Link href="" className="hover:text-blue-500 transition">
+                        <Link href="../about/" className="hover:text-blue-500 transition">
                             <p>About Us</p>
                         </Link>
                     </div>
@@ -21,10 +21,7 @@ export default function Footer() {
                 <div className="flex flex-col gap-5">
                     <h5 className="text-black font-bold">Support</h5>
                     <div className="text-sm">
-                        <Link href="" className="hover:text-blue-500 transition">
-                            <p>Contact Us</p>
-                        </Link>
-                        <Link href="" className="hover:text-blue-500 transition">
+                        <Link href="../policy/" className="hover:text-blue-500 transition">
                             <p>Privacy Policy</p>
                         </Link>
                     </div>
@@ -32,7 +29,7 @@ export default function Footer() {
                 <div className="flex flex-col gap-5">
                     <h5 className="text-black font-bold">Hosting</h5>
                     <div className="text-sm">
-                        <Link href="" className="hover:text-blue-500 transition">
+                        <Link href="../create/" className="hover:text-blue-500 transition">
                             <p>List Your Venue</p>
                         </Link>
                     </div>
